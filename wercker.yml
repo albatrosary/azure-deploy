@@ -51,8 +51,11 @@ deploy:
         name: azure ftp deploy
         code: |
           # lftp -u ${FTP_USERNAME},${FTP_PASSWORD} -e "mirror -Rev -X wercker.yml dist/. /site/wwwroot/." ${FTP_SERVER_URL}
-          lftp -u ${FTP_USERNAME},${FTP_PASSWORD} -e "mirror -Rev dist/. /site/wwwroot/." ${FTP_SERVER_URL}
+          # lftp -u ${FTP_USERNAME},${FTP_PASSWORD} -e "mirror -Rev dist/. /site/wwwroot/." ${FTP_SERVER_URL}
+          lftp -u ${FTP_USERNAME},${FTP_PASSWORD} -e "set ssl:verify-certificate no;mirror -Rev -X wercker.yml dist/. /site/wwwroot/." ${FTP_SERVER_URL}
+
     - script:
         name: echo information
         code: |
           echo "ftp up comp"
+          
